@@ -1,35 +1,45 @@
 @extends('base')
 
-@section('titre', 'Listing des articles')
+@section('titre', 'Listing de tous les articles !')
 
 @section('contenu')
+    <h1 class="text-center">Listing de tous les articles !</h1>
 
-    <h1>Ma Première vue sur Laravel !</h1>
-    <div class="alert alert-success">Ajout de Bootstrap à notre vue</div>
-
-    {{-- {{ $article["titre"] }} --}}
-    <div class="row gap-3 justify-content-between">
-        {{-- @foreach ($articles as $article) --}}
-
-        @forelse ($articles as $article)
-        <div class="card col-md-5">
-            <img class="w-100" src={{ asset($article['image_path']) }} class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Description : <b>{{ $article['titre'] }}</b></h5>
-                <p class="card-text">Auteur <b>{{ $article['auteur'] }}</b></p>
-                <p class="card-text">Categorie : <b>{{ $article['categorie'] }}</b></p>
-                {{-- <a href={{route('article.affiche', ['motif'=> $article->motif, 'id' => $article->id])}} class="btn btn-primary">Voir plus -></a> --}}
-                <a class="btn btn-primary"><b>Voir plus -></b></a>
-
-                <a class="btn btn-warning m-1 p-1"><span class="badge text-bg-warning">Editer</span></a>
-                <a class="btn btn-danger m-1 p-1"><span class="badge text-bg-danger">Supprimer</span></a>
+    @auth
+        <div class="position-relative">
+            <div class="position-absolute end-0">
+                <a href="{{ route('article.create') }}" class="btn-primary btn">Ajouter un Article</a>
             </div>
         </div>
-        @empty
-            <h2>Pas d'articles</h2>
-        @endforelse
-        {{-- @endforeach --}}
-    </div>
-            
+    @endauth
 
+    <div class="row justify-content-between gap-3 my-5">
+        @forelse ($articles as $article)
+            <div class="card col-3">
+                <img src={{ $article->imageUrl() }} alt="" srcset="" class="card-img-top">
+                <div class="card-body">
+                    <p><b>Titre : </b> {{ $article->titre }} </p>
+                    <p><b>Description : </b> {{ $article->description }} </p>
+                    <p>
+                    <div class="d-inline-block"><a href="{{ route('article.show', $article) }}"
+                            class="btn btn-primary btn-sm">voir plus -></a></div>
+                    @auth
+                        <div class="d-inline-block"><a href="{{ route('article.edit', $article) }}"
+                                class="btn mx-3 btn-warning btn-sm">editer</a></div>
+                        <form action="{{ route('article.destroy', $article) }}" method="post" class="d-inline-block">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-danger btn-sm">supprimer</button>
+                        </form>
+                    @endauth
+                    </p>
+                </div>
+            </div>
+
+        @empty
+            <h3>Aucun n'articles disponible !</h3>
+        @endforelse
+    </div>
+
+    {{ $articles->links() }}
 @endsection

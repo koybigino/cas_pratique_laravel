@@ -14,8 +14,10 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->string('titre');
+            $table->string('titre')->unique();
             $table->longText('description');
+            $table->string("image");
+            // $table->string('image')->nullable();
             $table->timestamps();
 
             $table->foreignIdFor(Categorie::class)->nullable();
