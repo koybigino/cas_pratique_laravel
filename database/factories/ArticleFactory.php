@@ -19,7 +19,8 @@ class ArticleFactory extends Factory
         return [
             "titre" => $this->faker->sentence(4, true),
             "description" => $this->faker->sentences(4, true),
-            "image" => "uploads/img.jpg"
+            "image" => "uploads/img.jpg",
+            "user_id" => 1,
         ];
     }
 }

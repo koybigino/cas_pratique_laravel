@@ -8,6 +8,6 @@
 {{-- Mettre du contenu dans la partie reservée  --}}
 @section('contenu')
 
-    <h1>Welcome Page</h1>
+    <h1>{{__("Bienvenu sur la plateforme de gestion des article !")}}</h1>
 
 @endsection

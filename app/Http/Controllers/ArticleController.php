@@ -17,6 +17,8 @@ class ArticleController extends Controller
     public function __construct(){
         // $this->middleware("auth", ["except" => ["show", "index"]]);
         $this->middleware(["auth", "verified"])->except(["show", "index"]);
+
+        $this->authorizeResource(Article::class, 'article');
     }
 
     
@@ -29,6 +31,9 @@ class ArticleController extends Controller
 
     public function index()
     {
+
+        // dd(Auth::user()->can("create", new Article));
+
         return view("article.index", [
             "articles" => Article::orderBy('created_at', 'desc')->paginate(6)
         ]);

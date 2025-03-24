@@ -6,11 +6,13 @@
     <h1 class="text-center">Listing de tous les articles !</h1>
 
     @auth
-        <div class="position-relative">
-            <div class="position-absolute end-0">
-                <a href="{{ route('article.create') }}" class="btn-primary btn">Ajouter un Article</a>
+        @can('create', $articles[0])
+            <div class="position-relative">
+                <div class="position-absolute end-0">
+                    <a href="{{ route('article.create') }}" class="btn-primary btn">Ajouter un Article</a>
+                </div>
             </div>
-        </div>
+        @endcan
     @endauth
 
     <div class="row justify-content-between gap-3 my-5">
@@ -24,13 +26,17 @@
                     <div class="d-inline-block"><a href="{{ route('article.show', $article) }}"
                             class="btn btn-primary btn-sm">voir plus -></a></div>
                     @auth
-                        <div class="d-inline-block"><a href="{{ route('article.edit', $article) }}"
-                                class="btn mx-3 btn-warning btn-sm">editer</a></div>
-                        <form action="{{ route('article.destroy', $article) }}" method="post" class="d-inline-block">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" class="btn btn-danger btn-sm">supprimer</button>
-                        </form>
+                        @can('update', $article)
+                            <div class="d-inline-block"><a href="{{ route('article.edit', $article) }}"
+                                    class="btn mx-3 btn-warning btn-sm">editer</a></div>
+                        @endcan
+                        @can('delete', $article)
+                            <form action="{{ route('article.destroy', $article) }}" method="post" class="d-inline-block">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger btn-sm">supprimer</button>
+                            </form>
+                        @endcan
                     @endauth
                     </p>
                 </div>

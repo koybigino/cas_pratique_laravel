@@ -24,9 +24,11 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{route("article.index")}}">Articles</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
+                    @if(Auth::user()?->role == "user")
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('contact')}}">Contact</a>
+                        </li>
+                    @endif
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -50,14 +52,14 @@
 
     <div class="container my-5">
         @if (session('success'))
-            <div class="alert alert-success">
+            <x-alert type='success'>
                 {{ session('success') }}
-            </div>
+            </x-alert>
         @endif
         @error('invalid')
-            <div class="alert alert-danger">
+            <x-alert type='danger'  >
                 {{ $message }}
-            </div>
+            </x-alert>
         @enderror
         @yield('contenu')
     </div>

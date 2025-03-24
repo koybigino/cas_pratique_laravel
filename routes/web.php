@@ -6,6 +6,7 @@ use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EtiquetteController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Contact;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,6 +43,8 @@ Route::resource('etiquette', EtiquetteController::class);
 // Route::get("/me/logout", [AuthController::class, "logout"])->name("auth.logout")->middleware('auth');
 // Route::post("/me/login", [AuthController::class, "seLoger"]);
 
+Route::get("/contact", [ContactController::class, 'contact'])->name('contact')->can('envoyer', Contact::class);
+Route::post("/contact", [ContactController::class, 'envoyer'])->can('envoyer', Contact::class);
 
 
 require __DIR__ . '/auth.php';
