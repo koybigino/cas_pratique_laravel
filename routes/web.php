@@ -6,6 +6,7 @@ use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EtiquetteController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Article;
 use App\Models\Contact;
 use Illuminate\Support\Facades\Route;
 
